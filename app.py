@@ -25,6 +25,10 @@ def index():
 @app.route("/<url>")
 def reddit_comment_ts(url):
     try:
+        # Clean URL
+        url = url.split("?utm", 1)
+        url = url[0]
+        
         # Append .json
         url = url + ".json"
 
