@@ -33,15 +33,15 @@ def reddit_comment_ts(url):
         page_data = response.read().decode('utf-8')
 
         # Extract unix time stamp
-        unix_ts = re.search(r'("created_utc":)(.+?),', page_data)
-        ts = unix_ts.group(2)
+        unix_ts = re.search(r'created_utc(?!.*created_utc)":(.+?),', page_data)
+        ts = unix_ts.group(1)
 
         # Prepare for convertion
         ts.strip()
         ts = (int(float(ts)))
 
         # Print timestamp
-        converted_ts = (datetime.datetime.fromtimestamp(int(ts)).strftime('%Y-%m-%d %H:%M:%S'))
+        converted_ts = (datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'))
         return converted_ts
     except:
         return "HTTP timeout or Input Error"
